@@ -1,0 +1,40 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+aiochclient = "*"
+aiohttp = "*"
+apscheduler = "*"
+dbutils = "*"
+happybase = "~=1.2.0"
+loguru = "~=0.6.0"
+lxml = "*"
+matplotlib = "*"
+motor = "~=3.0.0"
+numpy = "*"
+openpyxl = "*"
+pandahouse = "*"
+pandas = "~=1.4.1"
+pycryptodome = "*"
+pymysql = "~=0.9.3"
+pyspark = "~=3.2.1"
+redis = "~=4.2.2"
+requests = "~=2.27.1"
+selenium = "*"
+telethon = "*"
+toolz = "*"
+urllib3 = "*"
+wordcloud = "*"
+aiomysql = "~=0.0.22"
+cx-oracle = "*"
+cx-oracle-async = "*"
+grpcio = "*"
+objprint = "*"
+grpcio-tools = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"
