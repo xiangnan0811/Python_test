@@ -25,7 +25,7 @@ class InterceptHandler(logging.Handler):
         logger_opt.log(record.levelname, record.getMessage())
 
 
-def init_logger(other_modulle: str|None = None, log_file_name: str|None = None):
+def init_logger(other_modulle: str|None = None, log_file_name: str|None = None, remove_existing_handlers: bool = True):
     """
     初始化日志模块
     :return:
@@ -40,7 +40,9 @@ def init_logger(other_modulle: str|None = None, log_file_name: str|None = None):
         # 将 InterceptHandler 添加到 other_modulle 的日志处理器中
         logging.getLogger(other_modulle).handlers = [InterceptHandler()]
         logging.getLogger(other_modulle).setLevel(LOG_LEVEL)
-    logger.remove(0)
+    if remove_existing_handlers:
+        for handler in logger._core.handlers:
+            logger.remove(handler)
     logger.add(sys.stderr, level=LOG_LEVEL, format=log_format)
     logger.add(
         f"{log_path}/{log_file_name}.log",
