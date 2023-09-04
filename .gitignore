@@ -24,3 +24,4 @@ node_modules
 xml/楚雄xml模板.xml
 xml/result.json
 .DS_Store
+*.session.sql
