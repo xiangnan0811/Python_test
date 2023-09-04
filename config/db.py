@@ -10,19 +10,19 @@ from db.oracle import OracleConfig
 from db.aiomysql import MySQLConfig
 
 oracle_config = OracleConfig(
-    host='47.108.151.116',
-    port='12458',
-    service_name='lxs_item',
-    user='lxs_item',
-    password='lxs67890prod',
-    database='lxs_item'
+    host='',
+    port='',
+    service_name='',
+    user='',
+    password='',
+    database=''
 )
 
 mysql_config = MySQLConfig(
-    host='47.108.151.116',
-    port=17649,
-    user='toor',
-    password='nyn^B2!g^V@57omO^JYr',
+    host='',
+    port=0,
+    user='',
+    password='',
     database='tk',
 )
 
