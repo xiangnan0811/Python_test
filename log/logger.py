@@ -41,7 +41,7 @@ def init_logger(other_modulle: str|None = None, log_file_name: str|None = None, 
         logging.getLogger(other_modulle).handlers = [InterceptHandler()]
         logging.getLogger(other_modulle).setLevel(LOG_LEVEL)
     if remove_existing_handlers:
-        for handler in logger._core.handlers:
+        for handler in logger._core.handlers: # pylint: disable=protected-access # type: ignore
             logger.remove(handler)
     logger.add(sys.stderr, level=LOG_LEVEL, format=log_format)
     logger.add(
