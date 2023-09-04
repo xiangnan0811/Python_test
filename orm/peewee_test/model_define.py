@@ -91,5 +91,6 @@ def main():
     logger.debug(f'rows: {rows}')
 
     # 4.2 use update()
-    rows = User.update(username='Throdora').where(User.id == 3).execute()
+    u = User.update(username='Throdora').where(User.id == 3) # 1. 仅组装sql语句，不执行；2. 返回的是一个 peewee.ModelUpdate
+    rows = u.execute() # 执行sql语句
     logger.debug(f'rows: {rows}')
