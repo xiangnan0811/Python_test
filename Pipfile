@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 peewee = "*"
 pymysql = "*"
+loguru = "*"
+grpcio-tools = "*"
+grpcio = "*"
 
 [dev-packages]
 
