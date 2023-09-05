@@ -9,9 +9,9 @@ from log.logger import init_logger
 db = peewee.MySQLDatabase(
     'peewee_test',
     host=os.getenv('MYSQL_HOST'),
-    port=int(os.getenv('MYSQL_PORT')), # type: ignore
+    port=int(os.getenv('MYSQL_PORT')),  # type: ignore
     user=os.getenv('MYSQL_USER'),
-    passwd=os.getenv('MYSQL_PASS')
+    passwd=os.getenv('MYSQL_PASS'),
 )
 
 
@@ -26,9 +26,13 @@ class User(peewee.Model):
 class Tweet(peewee.Model):
     user = peewee.ForeignKeyField(User, backref='tweets')
     message = peewee.TextField()
-    created_date = peewee.DateTimeField(default=datetime.now, formats='%Y-%m-%d %H:%M:%S')
+    created_date = peewee.DateTimeField(
+        default=datetime.now, formats='%Y-%m-%d %H:%M:%S'
+    )
     is_published = peewee.BooleanField(default=True)
-    updated_date = peewee.DateTimeField(default=datetime.now, formats='%Y-%m-%d %H:%M:%S')
+    updated_date = peewee.DateTimeField(
+        default=datetime.now, formats='%Y-%m-%d %H:%M:%S'
+    )
 
     class Meta:
         database = db
@@ -59,11 +63,19 @@ def main():
     # lily.save()
 
     # User.create(username='lucy')
+    # User.create(username='lucy1')
+    # User.create(username='lucy2')
+    # User.create(username='lucy3')
+    # User.create(username='lucy4')
+    # User.create(username='lucy5')
+    # User.create(username='lucy6')
+    # User.create(username='lucy7')
+    # User.create(username='lucy8')
 
     # 3. query data
-    
+
     # 3.1 get all data
-    users = User.select() # 1. 仅组装sql语句，不执行；2. 返回的是一个可迭代对象 peewee.ModelSelect
+    users = User.select()  # 1. 仅组装sql语句，不执行；2. 返回的是一个可迭代对象 peewee.ModelSelect
     for u in users:
         logger.debug(u.username)
 
@@ -91,6 +103,22 @@ def main():
     logger.debug(f'rows: {rows}')
 
     # 4.2 use update()
-    u = User.update(username='Throdora').where(User.id == 3) # 1. 仅组装sql语句，不执行；2. 返回的是一个 peewee.ModelUpdate
-    rows = u.execute() # 执行sql语句
+    u = User.update(username='Throdora').where(
+        User.id == 3
+    )  # 1. 仅组装sql语句，不执行；2. 返回的是一个 peewee.ModelUpdate
+    rows = u.execute()  # 执行sql语句
+    logger.debug(f'rows: {rows}')
+
+    # 5. delete data
+    logger.debug('-' * 50)
+    # 5.1 use delete_instance()
+    lucy3 = User.get(User.username == 'lucy3')
+    rows = lucy3.delete_instance()
+    logger.debug(f'rows: {rows}')
+
+    # 5.2 use delete()
+    query = User.delete().where(
+        User.username == 'lucy4'
+    )  # 1. 仅组装sql语句，不执行；2. 返回的是一个 peewee.ModelDelete
+    rows = query.execute()
     logger.debug(f'rows: {rows}')
