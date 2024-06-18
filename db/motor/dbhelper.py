@@ -10,16 +10,12 @@
 import  motor.motor_asyncio
 from motor.core import AgnosticCollection, AgnosticDatabase
 
-from log import Logger
-from config.running import LOG_LEVEL
-
 
 class DBHelper:
 
     def __init__(self, mongo_url, mongo_db):
         self.mc = motor.motor_asyncio.AsyncIOMotorClient(mongo_url)
         self.db: AgnosticDatabase = self.mc[mongo_db]
-        self.logger = Logger(LOG_LEVEL)
 
     @staticmethod
     async def create_index(index_keys: list, coll: AgnosticCollection):
@@ -40,7 +36,7 @@ class DBHelper:
         """
         return self.db.get_collection(coll, **kwargs)
 
-    async def insert_many(self, data: list, coll_name: str, index_keys: list=None):
+    async def insert_many(self, data: list, coll_name: str, index_keys: list=None): # type: ignore
         """
         insert many data
         :param data:           data list
@@ -60,7 +56,7 @@ class DBHelper:
             return len(insert_res.inserted_ids)
         return 0
 
-    async def find_one(self, coll_name: str, _filter: dict=None, projection: dict=None):
+    async def find_one(self, coll_name: str, _filter: dict=None, projection: dict=None): # type: ignore
         """
         find one data
         :param coll_name:      collection name
