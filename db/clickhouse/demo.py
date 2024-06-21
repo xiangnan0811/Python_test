@@ -12,18 +12,19 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Setup logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+
 
 class DBHelper:
     def __init__(self, host=None, port=None, username=None, password=None, database=None):
-        self.host = host or os.getenv('CLICKHOUSE_HOST')
-        self.port = port or os.getenv('CLICKHOUSE_PORT')
-        self.username = username or os.getenv('CLICKHOUSE_USER')
-        self.password = password or os.getenv('CLICKHOUSE_PASSWORD')
-        self.database = database or os.getenv('CLICKHOUSE_DATABASE')
+        self.host = host or os.getenv("CLICKHOUSE_HOST")
+        self.port = port or os.getenv("CLICKHOUSE_PORT")
+        self.username = username or os.getenv("CLICKHOUSE_USER")
+        self.password = password or os.getenv("CLICKHOUSE_PASSWORD")
+        self.database = database or os.getenv("CLICKHOUSE_DATABASE")
         self.client = None
         self.max_retries = 3
-        self.retry_delay = 2  # seconds
+        self.retry_delay = 10  # seconds
 
     def __enter__(self):
         self.connect()
@@ -43,7 +44,7 @@ class DBHelper:
                     port=self.port,
                     username=self.username,
                     password=self.password,
-                    database=self.database
+                    database=self.database,
                 )
                 logging.info("Connection to ClickHouse established successfully.")
                 return
@@ -59,7 +60,7 @@ class DBHelper:
     def execute_query(self, query, params=None):
         """
         Execute a query and return the results.
-        
+
         :param query: SQL query to be executed
         :param params: Optional dictionary of parameters to bind to the query
         :return: Query results
@@ -85,6 +86,7 @@ class DBHelper:
             self.client = None
             logging.info("Connection to ClickHouse closed.")
 
+
 # Example usage
 if __name__ == "__main__":
     with DBHelper(
@@ -92,7 +94,7 @@ if __name__ == "__main__":
         port=8123,
         username="default",
         password="123333",
-        database="default"
+        database="default",
     ) as db_helper:
         query = """
 SELECT 
@@ -120,13 +122,13 @@ JOIN
     (SELECT * FROM default.fast_fee WHERE jssj BETWEEN '2021-05-01' AND '2024-04-30' AND fydm = '25030702801') AS f3 
 ON 
     f1.relation_field = f3.relation_field AND f1.zxrq = f3.zxrq
-limit 10"""
+limit 10"""  # noqa: E501
         results = db_helper.execute_query(query)
-        
+
         if results:
             print(f"Column names: {results.column_names}")
             # results.named_results
-            print('-' * 100)
+            print("-" * 100)
             for item in results.named_results():
                 print(item)
-            print('-' * 100)
+            print("-" * 100)
